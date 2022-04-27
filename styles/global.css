@@ -15,7 +15,7 @@ body {
 
   /** CSS Variables */
   --player-width: max(10%, 200px);
-  --player-height: 100px;
+  --player-height: 110px;
 
   --player-horizontal-gap: 1%;
   --player-vertical-gap: 15px;
@@ -28,7 +28,7 @@ body {
   flex-direction: column;
   justify-content: space-between;
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 .top-players,
@@ -37,7 +37,7 @@ body {
   justify-content: center;
 }
 
-div[class^='player'] {
+.player {
   background: #00c6ff; /* fallback for old browsers */
   background: -webkit-linear-gradient(to top, #0072ff, #00c6ff); /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(
@@ -124,7 +124,7 @@ div[class^='player'] {
   color: white;
 
   font-size: 100px;
-  background-color: red;
+  background-color: var(--color-mesa);
   text-align: center;
 }
 
@@ -136,7 +136,14 @@ div[class^='player'] {
   background-color: var(--color-mesa);
 }
 
-#casino-money::before{
-    content: '$';
-    color: greenyellow;
+#casino-money::before {
+  content: '$';
+  color: greenyellow;
+}
+
+.bet {
+  opacity: 0;
+  height: 0px;
+  font-weight: bold;
+  color: black;
 }

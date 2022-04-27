@@ -4,8 +4,23 @@ import './styles/buttons.css';
 import { Player, INITIAL_NOTEBOOK_SECUENCE } from './src/player';
 import { winningConditions } from './src/winningConditions';
 import { getRandomNumber, getArrayString } from './src/utils';
+import { animations } from './src/animations';
+import { gsap } from 'gsap';
+import { TextPlugin } from 'gsap/TextPlugin.js';
 
-const PLAYERS = [
+gsap.registerPlugin(TextPlugin);
+
+function initializeDOM() {
+  const notebooks = document.getElementsByClassName('notebook');
+  Array.from(notebooks).forEach((n) => (n.innerHTML = getArrayString(INITIAL_NOTEBOOK_SECUENCE)));
+
+  gsap.from('.final-section', { opacity: 0 });
+  gsap.from('img', { opacity: 0, ease: gsap.Power0 });
+}
+
+let CASINO_MONEY = 0;
+
+export const PLAYERS = [
   new Player('A', winningConditions.onRed),
   new Player('B', winningConditions.onBlack),
   new Player('C', winningConditions.onHight),
@@ -14,23 +29,23 @@ const PLAYERS = [
   new Player('F', winningConditions.onEven),
 ];
 
-// Self invoked function. Initialize all notebooks
-(function () {
-  const notebooks = document.getElementsByClassName('notebook');
-  Array.from(notebooks).forEach((n) => (n.innerHTML = getArrayString(INITIAL_NOTEBOOK_SECUENCE)));
-})();
-
-let CASINO_MONEY = 0;
-
-export const addToCasinoMoney = (amount) => (CASINO_MONEY += amount);
+export const addToCasinoMoney = (amount) => {
+  CASINO_MONEY += amount;
+};
 
 const playARound = () => {
+  const tl = gsap.timeline();
+
   const randomNumber = getRandomNumber();
+  const playAnim = animations.playAnimation(randomNumber);
 
   PLAYERS.forEach((player) => player.playRound(randomNumber));
 
-  document.getElementById('casino-money').innerText = CASINO_MONEY;
-  document.getElementById('number').innerText = randomNumber;
+  const postPlayAnim = animations.postPlayAnimation(CASINO_MONEY);
+  tl.add(playAnim).add(postPlayAnim);
+
+  //   document.getElementById('casino-money').innerText = CASINO_MONEY;
+  //   document.getElementById('number').innerText = randomNumber;
 };
 
 const btnPlay = document.getElementById('btn-play');
@@ -42,3 +57,5 @@ btnSimulate.addEventListener('click', () => {
     playARound();
   }
 });
+
+initializeDOM();

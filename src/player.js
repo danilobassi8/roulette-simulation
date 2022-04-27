@@ -1,5 +1,6 @@
 import { addToCasinoMoney } from '../main';
 import { getArrayString } from './utils';
+import { animations } from './animations';
 
 export const INITIAL_NOTEBOOK_SECUENCE = [1, 2, 3, 4];
 
@@ -44,6 +45,7 @@ export class Player {
 
   playRound(number) {
     const bet = this.getBetAmount();
+
     if (this.didWin(number)) {
       this.balance += bet;
       addToCasinoMoney(-bet);
@@ -55,13 +57,12 @@ export class Player {
       // Remove first and last element from the notebook. Won't do if notebook is empty.
       this.notebook.shift();
       this.notebook.pop();
-      console.log(this.notebook);
     }
 
-    const balance = document.querySelectorAll(`.player-${this.name} .balance`)[0];
-    balance.innerHTML = this.balance;
+    // const balance = document.querySelectorAll(`.player-${this.name} .balance`)[0];
+    // balance.innerHTML = this.balance;
 
-    const notebook = document.querySelectorAll(`.player-${this.name} .notebook`)[0];
-    notebook.innerHTML = getArrayString(this.notebook);
+    // const notebook = document.querySelectorAll(`.player-${this.name} .notebook`)[0];
+    // notebook.innerHTML = getArrayString(this.notebook);
   }
 }
