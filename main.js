@@ -36,16 +36,17 @@ export const addToCasinoMoney = (amount) => {
 const playARound = () => {
   const tl = gsap.timeline();
 
-  const randomNumber = getRandomNumber();
+  const randomNumber = 2;
   const playAnim = animations.playAnimation(randomNumber);
 
-  PLAYERS.forEach((player) => player.playRound(randomNumber));
+  console.log(('number', randomNumber));
+  PLAYERS.forEach((player) => {
+    player.playRound(randomNumber);
+  });
+  console.log('CASINO:', CASINO_MONEY);
 
   const postPlayAnim = animations.postPlayAnimation(CASINO_MONEY);
   tl.add(playAnim).add(postPlayAnim);
-
-  //   document.getElementById('casino-money').innerText = CASINO_MONEY;
-  //   document.getElementById('number').innerText = randomNumber;
 };
 
 const btnPlay = document.getElementById('btn-play');
@@ -54,8 +55,10 @@ const btnSimulate = document.getElementById('btn-simulate');
 btnPlay.addEventListener('click', playARound);
 btnSimulate.addEventListener('click', () => {
   for (let i = 0; i < 4000; i++) {
-    playARound();
+    const randomNumber = getRandomNumber();
+    PLAYERS.forEach((player) => player.playRound(randomNumber));
   }
+  console.log('CASINO:', CASINO_MONEY);
 });
 
 initializeDOM();

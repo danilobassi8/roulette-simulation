@@ -2,6 +2,7 @@ import { gsap, Power1, Expo } from 'gsap';
 import { PLAYERS } from '../main';
 import { winningConditions } from './winningConditions';
 import { getArrayString } from './utils';
+import { INITIAL_NOTEBOOK_SECUENCE } from './player';
 
 export const ENABLE_ANIMATIONS = true;
 
@@ -22,13 +23,21 @@ export const animations = {
       const innerTL = gsap.timeline();
       const selector = `.player-${player.name} .bet`;
 
-      const bet = player.getBetAmount();
+      const { bet, needsANotebookReset } = player.getBetPossibleAmount();
+
+      // I do this because the animation have the data BEFORE running the animation.
+      let betNumber = bet;
+      const willRestartNotebookOnNext = needsANotebookReset;
+      if (willRestartNotebookOnNext) {
+        betNumber = 5; // TODO: change
+      }
+
       innerTL
         .to(selector, { height: 20, opacity: 1 })
         .fromTo(
           selector,
           { text: 'bet: ', color: 'black' },
-          { text: `bet: ${bet}`, duration: 1 },
+          { text: `bet: ${betNumber}`, duration: 1 },
           '<'
         );
 
@@ -73,9 +82,22 @@ export const animations = {
         .to('.player', { height: 100, duration: 1 }, '<');
 
       // update their notebooks
+      const { bet, needsANotebookReset } = player.getBetPossibleAmount();
+
+      // I do this because the animation have the data BEFORE running the animation.
+      let betNumber = bet;
+      const willRestartNotebookOnNext = needsANotebookReset;
+      if (willRestartNotebookOnNext) {
+        betNumber = 5; // TODO: needs to be changed if
+      }
+
       innerTl
         .to(notebookSelector, { opacity: 0 }, '<')
-        .to(notebookSelector, { text: getArrayString(player.notebook) })
+        .to(notebookSelector, {
+          text: willRestartNotebookOnNext
+            ? `${getArrayString(player.notebook)} ➡ ${getArrayString(INITIAL_NOTEBOOK_SECUENCE)}`
+            : getArrayString(player.notebook),
+        })
         .to(notebookSelector, { opacity: 1 });
 
       // update their balance

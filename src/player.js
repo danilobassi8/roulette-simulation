@@ -1,6 +1,4 @@
 import { addToCasinoMoney } from '../main';
-import { getArrayString } from './utils';
-import { animations } from './animations';
 
 export const INITIAL_NOTEBOOK_SECUENCE = [1, 2, 3, 4];
 
@@ -18,33 +16,35 @@ export class Player {
    */
   restartNotebook() {
     this.notebook = [...INITIAL_NOTEBOOK_SECUENCE];
-    return this.notebook[0] + this.notebook[this.notebook.length - 1];
   }
 
-  getBetAmount() {
-    let betNumber = 0;
+  /** Returns possible bet amount and a flag telling if needs a reset (for animation) */
+  getBetPossibleAmount() {
+    const len = this.notebook.length;
 
-    if (this.notebook.length >= 2) {
-      const first = this.notebook[0];
-      const last = this.notebook[this.notebook.length - 1];
-      betNumber = first + last;
+    let bet = 0;
+
+    if (len >= 2) {
+      bet = this.notebook[0] + this.notebook[len - 1];
     } else {
-      if (this.notebook.length == 1) {
-        betNumber = this.notebook[0];
-      } else {
-        betNumber = this.restartNotebook();
-      }
+      bet = this.notebook[0] || 0;
     }
 
-    if (betNumber >= 5 && betNumber <= 4000) {
-      return betNumber;
-    } else {
-      return this.restartNotebook();
+    return { bet, needsANotebookReset: bet < 5 || bet > 4000 };
+  }
+
+  getBetNumberFromNotebook() {
+    const { bet, needsANotebookReset } = this.getBetPossibleAmount();
+
+    if (needsANotebookReset) {
+      this.restartNotebook();
+      return this.getBetPossibleAmount().bet;
     }
+    return bet;
   }
 
   playRound(number) {
-    const bet = this.getBetAmount();
+    const bet = this.getBetNumberFromNotebook();
 
     if (this.didWin(number)) {
       this.balance += bet;
@@ -58,11 +58,5 @@ export class Player {
       this.notebook.shift();
       this.notebook.pop();
     }
-
-    // const balance = document.querySelectorAll(`.player-${this.name} .balance`)[0];
-    // balance.innerHTML = this.balance;
-
-    // const notebook = document.querySelectorAll(`.player-${this.name} .notebook`)[0];
-    // notebook.innerHTML = getArrayString(this.notebook);
   }
 }
