@@ -224,13 +224,21 @@ export const animations = {
   playAFullSimulation: (casinoMoney) => {
     console.log('STARTING');
     const tl = gsap.timeline();
-    // add loading effect.
 
     PLAYERS.forEach((player) => {
+      // change players' balance
       const balanceSelector = `.player-${player.name} .balance`;
       document.querySelector(balanceSelector).innerText = player.balance;
+
+      // change players' notebooks
+      const { bet, needsANotebookReset } = player.getBetPossibleAmount();
+      const notebookSelector = `.player-${player.name} .notebook`;
+      document.querySelector(notebookSelector).innerText = needsANotebookReset
+        ? `${getArrayString(player.notebook)} ➡ ${getArrayString(INITIAL_NOTEBOOK_SECUENCE)}`
+        : getArrayString(player.notebook);
     });
 
+    // change casino money
     document.querySelector('#casino-money').innerText = casinoMoney;
   },
 };
