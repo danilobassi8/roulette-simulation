@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.6a60fdac.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css"
+      rel="stylesheet"
+    />
+    
+    
+
+    <title>Roulette</title>
+    <script type="module" crossorigin src="/assets/index.98f7bf47.js"></script>
+    <link rel="stylesheet" href="/assets/index.cbe0323a.css">
+  </head>
+  <body>
+    <div id="app">
+      <div>
+        <div class="top-players">
+          <div class="player player-A">
+            <span><b>Player A</b></span>
+            <span>Strategy: Red</span>
+            <span class="notebook"></span>
+            <span class="bet"></span>
+            <span class="balance">0</span>
+          </div>
+          <div class="player player-B">
+            <span><b>Player B</b></span>
+            <span>Strategy: Black</span>
+            <span class="notebook"></span>
+            <span class="bet"></span>
+            <span class="balance">0</span>
+          </div>
+          <div class="player player-C">
+            <span><b>Player C</b></span>
+            <span>Strategy: Hight</span>
+            <span class="notebook"></span>
+            <span class="bet"></span>
+            <span class="balance">0</span>
+          </div>
+        </div>
+
+        <div class="mesa-container">
+          <div class="mesa">
+            <img id="img-mesa" src="/assets/mesa.1f7381ba.jpg" alt="" />
+            <img id="img-ruleta" src="/assets/ruleta.dbbcbed9.png" alt="ruleta" />
+          </div>
+        </div>
+
+        <div class="bottom-players">
+          <div class="player player-D">
+            <span><b>Player D</b></span>
+            <span>Strategy: Low</span>
+            <span class="notebook"></span>
+            <span class="bet"></span>
+            <span class="balance">0</span>
+          </div>
+          <div class="player player-E">
+            <span><b>Player C</b></span>
+            <span>Strategy: Odd</span>
+            <span class="notebook"></span>
+            <span class="bet"></span>
+            <span class="balance">0</span>
+          </div>
+          <div class="player player-F">
+            <span><b>Player C</b></span>
+            <span>Strategy: Even</span>
+            <span class="notebook"></span>
+            <span class="bet"></span>
+            <span class="balance">0</span>
+          </div>
+        </div>
+      </div>
+      <!-- /end of table-->
+
+      <div class="buttons">
+        <button id="btn-play" class="btn btn-blue btn-sep icon-play">play a round</button>
+        <button id="btn-simulate" class="btn btn-green btn-sep icon-play">
+          simulate 40k times
+        </button>
+      </div>
+
+      <div style="text-align: center;" class="volume-container">
+        <div style="display: inline-block; width: 40px;">
+          <i id="volume-icon" class="fa fa-volume-up"></i>
+        </div>
+        <input id="volume-input" type="range" min="0" max="1" step="0.01" value="1" />
+      </div>
+
+      <div class="final-section">
+        <div>
+          CASINO MONEY:
+          <div id="casino-money" class="final-box">0</div>
+        </div>
+        <div>
+          NUMBER
+          <div id="number" class="final-box">-</div>
+        </div>
+      </div>
+    </div>
+    
+  </body>
+</html>
