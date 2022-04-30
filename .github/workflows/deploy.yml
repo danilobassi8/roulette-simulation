@@ -8,5 +8,4 @@ jobs:
   - build:
     runs-on: ubuntu-latest
     steps:
-      - name: Build
-      run: ls -lat
+      - uses: actions/checkout@v3
