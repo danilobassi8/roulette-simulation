@@ -147,3 +147,17 @@ body {
   font-weight: bold;
   color: black;
 }
+
+.volume-container {
+  user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -o-user-select: none;
+}
+
+#volume-icon {
+  cursor: pointer;
+  font-size: 30px;
+  color: white;
+}

@@ -4,8 +4,33 @@ import { winningConditions } from './winningConditions';
 import { getArrayString } from './utils';
 import { INITIAL_NOTEBOOK_SECUENCE } from './player';
 
+export let GLOBAL_VOLUME = 1;
+export const changeVolume = (volume) => {
+  GLOBAL_VOLUME = volume;
+
+  const volIcon = document.querySelector('#volume-icon');
+  const volInput = document.querySelector('#volume-input');
+
+  if (GLOBAL_VOLUME == 0) {
+    volIcon.className = 'fa fa-volume-off';
+  } else if (GLOBAL_VOLUME < 0.5) {
+    volIcon.className = 'fa fa-volume-down';
+  } else {
+    volIcon.className = 'fa fa-volume-up';
+  }
+  volInput.value = `${GLOBAL_VOLUME}`;
+
+  Object.values(sounds).forEach((sound) => (sound.volume = GLOBAL_VOLUME));
+};
+
+const getAudioClip = (path) => {
+  const audioClip = new Audio(`../assets/sounds/${path}`);
+  audioClip.volume = GLOBAL_VOLUME;
+  return audioClip;
+};
+
 const sounds = {
-  roulette: new Audio('../assets/sounds/roulette.mp3'),
+  roulette: getAudioClip('roulette.mp3'),
 };
 
 export const animations = {
@@ -16,7 +41,11 @@ export const animations = {
       },
     });
 
-    tl.to('.player', { height: 130 });
+    tl.set('.btn', {
+      disabled: true,
+      top: 1,
+      className: 'btn btn-disabled btn-sep icon-play',
+    }).to('.player', { height: 130 }, '<');
 
     const innerTimelines = [];
     PLAYERS.forEach((player) => {
@@ -56,7 +85,7 @@ export const animations = {
         onStart: () => {
           const s = sounds.roulette;
           s.playbackRate = 3;
-          s.volume = 0.3;
+          s.volume = GLOBAL_VOLUME;
           s.play();
         },
       })
@@ -94,7 +123,7 @@ export const animations = {
       let betNumber = bet;
       const willRestartNotebookOnNext = needsANotebookReset;
       if (willRestartNotebookOnNext) {
-        betNumber = 5; // TODO: needs to be changed if
+        betNumber = player.MIN_BET;
       }
 
       innerTl
@@ -117,10 +146,14 @@ export const animations = {
       appTimelines.push(innerTl);
     });
     timeline.add(appTimelines);
+    // restore buttons
+    timeline
+      .to('.btn', { disabled: false, top: 0 }, '<')
+      .set('#btn-play', { className: 'btn btn-blue btn-sep icon-play ' }, '<')
+      .set('#btn-simulate', { className: 'btn btn-green btn-sep icon-play' }, '<    ');
   },
   postPlayAnimation: (casinoMoney) => {
     // add casino money
-    console.log('???', casinoMoney);
     return animations.addProgressionEffect('#casino-money', {
       fromNumber: document.querySelector(`#casino-money`).innerText,
       toNumber: casinoMoney,

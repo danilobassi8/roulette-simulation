@@ -4,7 +4,7 @@ import './styles/buttons.css';
 import { Player, INITIAL_NOTEBOOK_SECUENCE } from './src/player';
 import { winningConditions } from './src/winningConditions';
 import { getRandomNumber, getArrayString } from './src/utils';
-import { animations } from './src/animations';
+import { animations, changeVolume, GLOBAL_VOLUME } from './src/animations';
 import { gsap } from 'gsap';
 import { TextPlugin } from 'gsap/TextPlugin.js';
 
@@ -16,6 +16,19 @@ function initializeDOM() {
 
   gsap.from('.final-section', { opacity: 0 });
   gsap.from('img', { opacity: 0, ease: gsap.Power0 });
+
+  const volInput = document.querySelector('#volume-input');
+  const volIcon = document.querySelector('#volume-icon');
+
+  volInput.addEventListener('input', (ev) => {
+    const newVolume = parseFloat(ev.target.value);
+    changeVolume(newVolume);
+  });
+
+  volIcon.addEventListener('click', (ev) => {
+    console.log(ev);
+    GLOBAL_VOLUME ? changeVolume(0) : changeVolume(1);
+  });
 }
 
 let CASINO_MONEY = 0;

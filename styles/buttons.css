@@ -16,7 +16,6 @@
   font-weight: 700;
   outline: none;
   position: relative;
-
 }
 
 /* Pseudo elements for icons */
@@ -72,7 +71,15 @@
 }
 
 /* ----------------- COLORS -------------*/
-/* Button blue */
+
+.btn-disabled {
+  background: #8a8484;
+  color: black;
+}
+.btn-disabled:hover {
+  background: #716f6f;
+}
+
 .btn-blue {
   background: #3498db;
   color: #fff;
