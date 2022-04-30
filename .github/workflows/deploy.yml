@@ -2,6 +2,7 @@ name: GitHub Actions
 on: [push]
 jobs:
   BuildAndDeploy:
+    concurrency: ci-${{ github.ref }}
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
@@ -15,4 +16,5 @@ jobs:
         with:
           branch: gh-pages
           folder: dist
+          ssh-key: ${{ secrets.DEPLOY_KEY }}
 
