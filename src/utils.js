@@ -44,7 +44,6 @@ export function initializeDOM() {
   });
 
   volIcon.addEventListener('click', (ev) => {
-    console.log(ev);
     GLOBAL_VOLUME ? changeVolume(0) : changeVolume(1);
   });
 }

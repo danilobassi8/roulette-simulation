@@ -222,7 +222,6 @@ export const animations = {
       .to(selector, { textDecoration: 'none' }, '<');
   },
   playAFullSimulation: (casinoMoney) => {
-    console.log('STARTING');
     const tl = gsap.timeline();
 
     PLAYERS.forEach((player) => {
