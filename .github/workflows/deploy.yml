@@ -6,8 +6,8 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
-      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-      - name: List files in the repository
-        run: |
-          ls -lat ${{ github.workspace }}
+      - name: Build the project
+      - run: npm run build
+      - run: cd dist
+      - run: ls -lat
 
