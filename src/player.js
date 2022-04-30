@@ -14,9 +14,6 @@ export class Player {
     this.balance = 0;
   }
 
-  /**
-   * Restart notebook and return the sum of the first and last number
-   */
   restartNotebook() {
     this.notebook = [...INITIAL_NOTEBOOK_SECUENCE];
   }

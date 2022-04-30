@@ -1,13 +1,9 @@
-import './styles/global.css';
-import './styles/buttons.css';
-
 import { Player } from './src/player';
 import { winningConditions } from './src/winningConditions';
 import { getRandomNumber, initializeDOM } from './src/utils';
 import { animations } from './src/animations';
 import { gsap } from 'gsap';
 import { TextPlugin } from 'gsap/TextPlugin.js';
-
 gsap.registerPlugin(TextPlugin);
 
 let CASINO_MONEY = 0;
@@ -21,14 +17,13 @@ export const PLAYERS = [
   new Player('F', winningConditions.onEven),
 ];
 
-export const addToCasinoMoney = (amount) => {
-  CASINO_MONEY += amount;
-};
+export const addToCasinoMoney = (amount) => (CASINO_MONEY += amount);
 
 const playARound = () => {
   const tl = gsap.timeline();
+  const randomNumber = getRandomNumber();
 
-  const randomNumber = 2;
+  // play animations
   const playAnim = animations.playAnimation(randomNumber);
 
   PLAYERS.forEach((player) => {
