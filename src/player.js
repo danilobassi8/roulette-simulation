@@ -3,6 +3,9 @@ import { addToCasinoMoney } from '../main';
 export const INITIAL_NOTEBOOK_SECUENCE = [1, 2, 3, 4];
 
 export class Player {
+  MIN_BET = 5;
+  MAX_BET = 4000;
+
   constructor(name, winningCodintion) {
     this.name = name;
     this.didWin = winningCodintion;
@@ -30,7 +33,7 @@ export class Player {
       bet = this.notebook[0] || 0;
     }
 
-    return { bet, needsANotebookReset: bet < 5 || bet > 4000 };
+    return { bet, needsANotebookReset: bet < this.MIN_BET || bet > this.MAX_BET };
   }
 
   getBetNumberFromNotebook() {

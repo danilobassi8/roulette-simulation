@@ -4,12 +4,12 @@ import { winningConditions } from './winningConditions';
 import { getArrayString } from './utils';
 import { INITIAL_NOTEBOOK_SECUENCE } from './player';
 
-export const ENABLE_ANIMATIONS = true;
+const sounds = {
+  roulette: new Audio('../assets/sounds/roulette.mp3'),
+};
 
 export const animations = {
   playAnimation: (rouletteNumber) => {
-    if (!ENABLE_ANIMATIONS) return;
-
     const tl = gsap.timeline({
       onComplete: () => {
         animations.afterPlayAnimation(rouletteNumber);
@@ -29,7 +29,7 @@ export const animations = {
       let betNumber = bet;
       const willRestartNotebookOnNext = needsANotebookReset;
       if (willRestartNotebookOnNext) {
-        betNumber = 5; // TODO: change
+        betNumber = player.MIN_BET;
       }
 
       innerTL
@@ -50,16 +50,22 @@ export const animations = {
       duration: 2,
       finalNumber: rouletteNumber,
     });
+
     const spinEffectTL = gsap
-      .timeline()
+      .timeline({
+        onStart: () => {
+          const s = sounds.roulette;
+          s.playbackRate = 3;
+          s.volume = 0.3;
+          s.play();
+        },
+      })
       .to('#img-ruleta', { rotation: '+=2600', ease: Power1.easeOut, duration: 2.8 });
 
     tl.add([randomNumberTL, spinEffectTL]);
     return tl;
   },
   afterPlayAnimation: (rouletteNumber) => {
-    if (!ENABLE_ANIMATIONS) return;
-
     const timeline = gsap.timeline();
     const appTimelines = [];
     PLAYERS.forEach((player) => {
@@ -149,8 +155,6 @@ export const animations = {
     return tl;
   },
   addRandomRouletteEffect: (selector, { finalNumber = null, duration = 1, iterations = 100 }) => {
-    if (!ENABLE_ANIMATIONS) return;
-
     const timeline = gsap.timeline();
 
     for (let i = 0; i < iterations; i++) {
@@ -176,8 +180,6 @@ export const animations = {
     return timeline;
   },
   updateWithNewNotebook: (playerName, notebook) => {
-    if (!ENABLE_ANIMATIONS) return;
-
     const selector = `.player-${playerName} .notebook`;
     const tl = gsap.timeline();
     tl.to(selector, { textDecoration: 'line-through' })
