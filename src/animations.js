@@ -1,4 +1,4 @@
-import { gsap, Power1, Expo } from 'gsap';
+import { gsap, Power1 } from 'gsap';
 import { PLAYERS } from '../main';
 import { winningConditions } from './winningConditions';
 import { getArrayString } from './utils';
@@ -172,7 +172,7 @@ export const animations = {
     let to = parseInt(toNumber);
 
     let flag = 0;
-    while (from != to || flag < 500) {
+    while (from != to || flag < 50) {
       flag++;
       if (from > to) {
         from--;
@@ -220,5 +220,17 @@ export const animations = {
       .to(selector, { text: notebook })
       .to(selector, { opacity: 1 })
       .to(selector, { textDecoration: 'none' }, '<');
+  },
+  playAFullSimulation: (casinoMoney) => {
+    console.log('STARTING');
+    const tl = gsap.timeline();
+    // add loading effect.
+
+    PLAYERS.forEach((player) => {
+      const balanceSelector = `.player-${player.name} .balance`;
+      document.querySelector(balanceSelector).innerText = player.balance;
+    });
+
+    document.querySelector('#casino-money').innerText = casinoMoney;
   },
 };

@@ -56,7 +56,6 @@ const playARound = () => {
   PLAYERS.forEach((player) => {
     player.playRound(randomNumber);
   });
-  console.log('CASINO:', CASINO_MONEY);
 
   const postPlayAnim = animations.postPlayAnimation(CASINO_MONEY);
   tl.add(playAnim).add(postPlayAnim);
@@ -71,7 +70,9 @@ btnSimulate.addEventListener('click', () => {
     const randomNumber = getRandomNumber();
     PLAYERS.forEach((player) => player.playRound(randomNumber));
   }
-  console.log('CASINO:', CASINO_MONEY);
+  console.log(PLAYERS);
+
+  animations.playAFullSimulation(CASINO_MONEY);
 });
 
 initializeDOM();
