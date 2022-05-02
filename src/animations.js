@@ -24,7 +24,8 @@ export const changeVolume = (volume) => {
 };
 
 const getAudioClip = (path) => {
-  const audioClip = new Audio(`/assets/sounds/${path}`);
+  const audioURL = new URL(`/assets/sounds/${path}`, import.meta.url).href;
+  const audioClip = new Audio(audioURL);
   audioClip.volume = GLOBAL_VOLUME;
   return audioClip;
 };
